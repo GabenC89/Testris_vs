@@ -143,7 +143,7 @@ void RenderEngine::draw(TTF_Font& gameFont, std::string t, int sx, int sy)
 
 	text = TTF_RenderText_Solid(&gameFont, t.c_str(), textColor);
 	if (!text) {
-		cout << "Failed to render text: " << TTF_GetError() << endl;
+		std::cout << "Failed to render text: " << TTF_GetError() << std::endl;
 	}
 
 	SDL_Texture* text_texture;

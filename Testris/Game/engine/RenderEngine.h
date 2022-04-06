@@ -51,7 +51,6 @@ public:
 	void destroyEngine();
 	
 	void drawFrameForNextBlock(int sx, int sy, int w, int h);
-	//void drawScore();
 	void draw(GameBoard& board, int sx, int sy);
 	void draw(Block& b, int sx, int sy);
 	void draw(TTF_Font& gameFont, std::string text, int sx, int sy);

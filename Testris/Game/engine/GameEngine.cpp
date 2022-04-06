@@ -43,7 +43,6 @@ void GameEngine::calculateCurrentScore(int multiplier)
 		levelSpeed = levelSpeed - 5;
 		if (levelSpeed < 5) levelSpeed = 5;
 	}
-	std::cout << "Score: " << currentScore << std::endl;
 }
 
 void GameEngine::createGameBoard()

@@ -52,7 +52,6 @@ int GameBoard::checkCurrentScoreLines(int posy, int depth)
 
 	if (scoredLinesNum > 0)
 	{
-		//increaseScore(scoreLines.size());
 		clearScoredLines(scoreLines, maxDepth);
 	}
 	return scoredLinesNum;
@@ -93,12 +92,15 @@ void GameBoard::dropRemainingBlocks(int checkDepth, int maxDrop)
 			if (grid[x][y] != 'X')
 			{
 				int fallY = y + 1;
-				while ( (fallY - y) < maxDrop && grid[x][fallY] == 'X')
+				if (fallY < gridHeight)
 				{
-					fallY++;
+					while ((fallY - y) < maxDrop && grid[x][fallY] == 'X')
+					{
+						fallY++;
+					}
+					grid[x][fallY] = grid[x][y];
+					grid[x][y] = 'X';
 				}
-				grid[x][fallY] = grid[x][y];
-				grid[x][y] = 'X';
 			}
 		}
 	}

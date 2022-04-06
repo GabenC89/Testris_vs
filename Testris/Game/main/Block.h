@@ -47,8 +47,6 @@ public:
 	int getHeight();
 	vector< vector<bool> > getShapeForm();
 
-	void printShape(vector< vector<bool> > mtx);
-
 	bool tryMoveDown(GameBoard& b);
 	bool tryMoveLeft(GameBoard& b, int by = 1);
 	void tryMoveRight(GameBoard& b);

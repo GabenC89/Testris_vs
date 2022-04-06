@@ -39,7 +39,6 @@ bool Block::checkCollision(GameBoard& b, int posx, int posy, vector< vector<bool
 		{
 			if (checkedShape[i][j] && grid[posx + i][posy + j] != 'X')
 			{	
-				cout << "WAT? Collision: " << grid[posx + i][posy + j] << endl;
 				return true;
 			}
 		}
@@ -54,7 +53,6 @@ bool Block::checkCollisionForRotate(GameBoard& b, int posx, int posy, vector< ve
 		if (posx + shape.size() - 1 >= b.getWidth())
 		{
 			int overlap = posx + shape.size() - b.getWidth();
-			cout << "Overlap detected: " << overlap << endl;
 			bool success = tryMoveLeft(b, overlap);
 			return !success;
 		}
@@ -162,29 +160,12 @@ void Block::tryMoveRight(GameBoard& b)
 void Block::tryRotate(GameBoard& b)
 {
 	vector< vector<bool> > tmpShape = shape; 
-	printShape(tmpShape);
 
 	transpose(tmpShape);
-	printShape(tmpShape);
 	reverseCols(tmpShape);
-	printShape(tmpShape);
 	
 	if ( !checkCollisionForRotate(b, gridPosX, gridPosY, tmpShape) )
 	{
 		shape = tmpShape;
-	}
-}
-
-void Block::printShape(vector< vector<bool> > mtx)
-{
-	cout << "Shape: " << endl;
-	for (int i = 0; i < mtx.size(); i++)
-	{
-		cout << "{";
-		for (int j = 0; j < mtx[i].size(); j++)
-		{
-			cout << "[" << mtx[i][j] << " ] , ";
-		}
-		cout << "}" << endl;
 	}
 }
