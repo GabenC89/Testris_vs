@@ -63,6 +63,7 @@ void GameEngine::createNewBlock()
 			createNextBlock();
 		}
 		currentBlock = move(nextBlock);
+		currentBlock->calculateGhostPosition(*board);
 		createNextBlock();
 	}
 
@@ -78,7 +79,7 @@ void GameEngine::createNextBlock()
 	srand(time(nullptr));
 	bool reversed = rand() % 2;
 	int type = rand() % 5;
-	nextBlock = new Block(type, startPosX, reversed);
+	nextBlock = new Block(type, *board, startPosX, reversed);
 }
 
 bool GameEngine::createGameWindow()
@@ -148,54 +149,6 @@ void GameEngine::destroyRenderObjects()
 		SDL_DestroyWindow(gameWindow);
 	}
 }
-
-/*
-
-void GameEngine::drawFrameForNextBlock()
-{
-	SDL_Surface* text;
-	SDL_Color textColor = { 255, 255, 255 };
-
-	text = TTF_RenderText_Solid(gameFont, "NEXT", textColor);
-	if (!text) {
-		cout << "Failed to render text: " << TTF_GetError() << endl;
-	}
-
-	SDL_Texture* text_texture;
-
-	text_texture = SDL_CreateTextureFromSurface(gameRenderer, text);
-
-	int posX = (DEFAULT_GRID_W + (startPosX - 1)) * TILE_SIZE;
-	int posY = 2 * TILE_SIZE;
-	SDL_Rect dest = { posX , posY, text->w, text->h };
-
-	SDL_RenderCopy(gameRenderer, text_texture, NULL, &dest);
-}
-
-void GameEngine::drawScore()
-{
-	SDL_Surface* text;
-	SDL_Color textColor = { 255, 255, 255 };
-
-	std::string label= "Score: ";
-	std::string scoreText = label + std::to_string(currentScore);
-	text = TTF_RenderText_Solid(gameFont, scoreText.c_str(), textColor);
-	if (!text) {
-		cout << "Failed to render text: " << TTF_GetError() << endl;
-	}
-
-	SDL_Texture* text_texture;
-
-	text_texture = SDL_CreateTextureFromSurface(gameRenderer, text);
-
-	int posX = (DEFAULT_GRID_W + (startPosX - 1)) * TILE_SIZE;
-	int posY = 10 * TILE_SIZE;
-	SDL_Rect dest = { posX , posY, text->w, text->h };
-
-	SDL_RenderCopy(gameRenderer, text_texture, NULL, &dest);
-}
-
-*/
 
 void GameEngine::handleEvents()
 {
@@ -289,6 +242,7 @@ void GameEngine::render()
 	if (currentBlock != nullptr)
 	{
 		gameRenderer->draw(*currentBlock, 0, 0);
+		gameRenderer->drawGhost(*currentBlock, 0, 0);
 	}
 	drawGameStateFrame();
 

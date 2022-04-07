@@ -54,6 +54,7 @@ public:
 	void draw(GameBoard& board, int sx, int sy);
 	void draw(Block& b, int sx, int sy);
 	void draw(TTF_Font& gameFont, std::string text, int sx, int sy);
+	void drawGhost(Block& b, int sx, int sy);
 	void drawBoardFrame(GameBoard& board);
 
 	void increaseFrameCount();

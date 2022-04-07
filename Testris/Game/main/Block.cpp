@@ -10,10 +10,11 @@ Color::Color(char flag, int r, int g, int b, int t) :
 
 //Block methods
 
-Block::Block(int type, int sx, bool needReverse) :
+Block::Block(int type, GameBoard& b, int sx, bool needReverse, bool needGhost) :
 	shape(blueprints[type]),
 	gridPosX(sx),
 	gridPosY(0),
+	showGhost(needGhost),
 	size(max(shape.size(), shape[0].size()))
 {
 	if (needReverse)
@@ -21,6 +22,7 @@ Block::Block(int type, int sx, bool needReverse) :
 		reverseCols(shape);
 	}
 	color = colors[type];
+	calculateGhostPosition(b);
 }
 
 bool Block::checkCollision(GameBoard& b, int posx, int posy, vector< vector<bool> > checkedShape)
@@ -72,9 +74,24 @@ int Block::getPosX()
 	return gridPosX;
 }
 
+int Block::getGhostPosX()
+{
+	return ghostPosX;
+}
+
 int Block::getPosY()
 {
 	return gridPosY;
+}
+
+int Block::getGhostPosY()
+{
+	return ghostPosY;
+}
+
+bool Block::isGhostNeeded()
+{
+	return showGhost;
 }
 
 vector< vector<bool> > Block::getShapeForm()
@@ -143,6 +160,8 @@ bool Block::tryMoveLeft(GameBoard& b, int by)
 	if (!checkCollision(b, tmpPosX, gridPosY, shape))
 	{
 		gridPosX = tmpPosX;
+		calculateGhostPosition(b);
+		
 		return true;
 	}
 	return false;
@@ -154,6 +173,7 @@ void Block::tryMoveRight(GameBoard& b)
 	if (!checkCollision(b, tmpPosX, gridPosY, shape))
 	{
 		gridPosX = tmpPosX;
+		calculateGhostPosition(b);
 	}
 }
 
@@ -167,5 +187,17 @@ void Block::tryRotate(GameBoard& b)
 	if ( !checkCollisionForRotate(b, gridPosX, gridPosY, tmpShape) )
 	{
 		shape = tmpShape;
+		calculateGhostPosition(b);
 	}
+}
+
+void Block::calculateGhostPosition(GameBoard& b)
+{
+	ghostPosX = gridPosX;
+	ghostPosY = 0;
+	while (!checkCollision(b, ghostPosX, ghostPosY, shape))
+	{
+		ghostPosY++;
+	}
+	ghostPosY--;
 }

@@ -99,6 +99,27 @@ void RenderEngine::draw(Block& b, int sx, int sy)
 	}
 }
 
+void RenderEngine::drawGhost(Block& b, int sx, int sy)
+{
+	SDL_Rect blockPiece;
+	blockPiece.w = TILE_SIZE;
+	blockPiece.h = TILE_SIZE;
+	vector< vector<bool> > form = b.getShapeForm();
+	for (int i = 0; i < form.size(); i++)
+	{
+		for (int j = 0; j < form[i].size(); j++)
+		{
+			if (form[i][j])
+			{
+				blockPiece.x = sx + ((b.getGhostPosX() + i) * TILE_SIZE);
+				blockPiece.y = sy + ((b.getGhostPosY() + j) * TILE_SIZE);
+				SDL_SetRenderDrawColor(gameRenderer, 155, 155, 155, 255);
+				SDL_RenderDrawRect(gameRenderer, &blockPiece);
+			}
+		}
+	}
+}
+
 void RenderEngine::draw(GameBoard& board, int sx, int sy)
 {
 	const map<char, Color> colorScheme =
