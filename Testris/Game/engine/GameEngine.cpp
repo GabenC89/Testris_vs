@@ -129,17 +129,19 @@ void GameEngine::destroyEngine()
 {
 	destroyBlocks();
 	destroyRenderObjects();
-	TTF_Quit();
+	//TTF_Quit();
 	SDL_Quit();
 	GameEngine::engine = nullptr;
 }
 
 void GameEngine::destroyRenderObjects()
 {
+/*
 	if (gameFont != nullptr)
 	{
 		TTF_CloseFont(gameFont);
 	}
+*/
 	if (gameRenderer != nullptr)
 	{
 		gameRenderer->destroyEngine();
@@ -190,7 +192,7 @@ void GameEngine::drawGameStateFrame()
 	int nWidth = 4 * TILE_SIZE;
 	int nHeight = 4 * TILE_SIZE;
 	gameRenderer->drawFrameForNextBlock(alignX, alignY, nWidth, nHeight);
-	gameRenderer->draw(*gameFont, nextText, alignX, 3 * TILE_SIZE);
+	//gameRenderer->draw(*gameFont, nextText, alignX, 3 * TILE_SIZE);
 	if (nextBlock != nullptr)
 	{
 		int centeringLeft = alignX - ((startPosX - 1) * TILE_SIZE / 2) - (nWidth / 2);
@@ -200,7 +202,7 @@ void GameEngine::drawGameStateFrame()
 	//Draw Score
 	std::string label = "Score: ";
 	std::string scoreText = label + std::to_string(currentScore);
-	gameRenderer->draw(*gameFont, scoreText, alignX, 10 * TILE_SIZE);
+	//gameRenderer->draw(*gameFont, scoreText, alignX, 10 * TILE_SIZE);
 }
 
 bool GameEngine::init()
@@ -213,6 +215,7 @@ bool GameEngine::init()
 		return false;
 	}
 
+	/*
 	if (TTF_Init() != 0)
 	{
 		std::cout << "TTF_Init Error: " << TTF_GetError() << std::endl;
@@ -224,6 +227,7 @@ bool GameEngine::init()
 		std::cout << "Failed to load font: " << TTF_GetError() << std::endl;
 		return false;
 	}
+	*/
 
 	if (createGameWindow())
 	{

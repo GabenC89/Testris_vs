@@ -14,7 +14,7 @@
 
 //SDL Includes
 #include <SDL.h>
-#include <SDL_ttf.h>
+//#include <SDL_ttf.h>
 
 class GameEngine
 {
@@ -38,7 +38,7 @@ class GameEngine
 
 	SDL_Window* gameWindow;
 	RenderEngine* gameRenderer;
-	TTF_Font* gameFont;
+	//TTF_Font* gameFont;
 
 	const char* windowTitle = "Testris";
 	int scaleSize = 2;
@@ -50,7 +50,7 @@ class GameEngine
 	int currentLevel;
 	int currentScore;
 	int levelSpeed;
-	bool needFullScreenStartup;
+	bool needFullScreenStartup = false;
 	int startPosX;
 	int windowWidth, windowHeight;
 	

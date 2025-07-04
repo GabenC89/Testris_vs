@@ -1,0 +1,86 @@
+cmake_minimum_required(VERSION 3.20)
+
+project(
+    GameEngineDemoSDL2
+    VERSION 0.2
+    LANGUAGES CXX
+)
+
+set(CMAKE_CXX_VERSION 17)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(GameEngineDemoSDL2_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+set(PROJECT_NAME "GameEngineDemoSDL2")
+
+set(Engine_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Game/engine")
+set(Game_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Game/main")
+
+#Sources
+set(GameEngineDemoSDL2_SOURCES "main.cpp"
+    "${Engine_DIR}/GameEngine.cpp"
+    "${Engine_DIR}/RenderEngine.cpp"
+    "${Game_DIR}/Block.cpp"
+    "${Game_DIR}/GameBoard.cpp")
+#Headers
+set(GameEngineDemoSDL2_HEADERS "${Engine_DIR}/GameEngine.h"
+    "${Engine_DIR}/RenderEngine.h"
+    "${Game_DIR}/Block.h"
+    "${Game_DIR}/GameBoard.h"
+    "${Game_DIR}/Shape.h")
+
+#SDL2 paths
+set(SDL2_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/sdl2")
+set(SDL2_ttf_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/sdl2_ttf")
+
+#SDL2 include dirs
+set(SDL2_INCLUDE_DIR "${SDL2_PATH}/include/SDL2")
+set(SDL2_ttf_INCLUDE_DIR "${SDL2_ttf_PATH}/include/SDL2")
+
+#SDL2_LIB_DIRS
+set(SDL2_LIB_DIR "${SDL2_PATH}/bin")
+set(SDL2_ttf_LIB_DIR "${SDL2_ttf_PATH}/bin")
+
+#SDL2_LIB_DLLS
+set(SDL2_LIB_DLLS "${SDL2_LIB_DIR}/SDL2.dll")
+#list(APPEND SDL2_LIB_DLLS "${SDL2_ttf_PATH}/SDL2_ttf.dll")
+
+#Prepare find_package to find SDL2 locally
+list(APPEND CMAKE_PREFIX_PATH "${SDL2_PATH}")
+list(APPEND CMAKE_MODULE_PATH "${SDL2_PATH}")
+
+list(APPEND CMAKE_PREFIX_PATH "${SDL2_ttf_PATH}")
+list(APPEND CMAKE_MODULE_PATH "${SDL2_ttf_PATH}")
+
+include_directories(${SDL2_INCLUDE_DIR}
+    ${SDL2_ttf_INCLUDE_DIR}
+)
+
+link_directories(${SDL2_ttf_PATH}/lib)
+#set(SDL_LIBRARIES ${SDL_LIBRARIES} SDL2main SDL2-static SDL2_ttf-static)
+
+find_package(SDL2 REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+#find_library(SDL2_ttf_LIB SDL2_ttf)
+
+#add_subdirectory(lib/sdl2)
+#add_subdirectory(lib/sdl2_ttf)
+
+add_executable(game_engine WIN32 ${GameEngineDemoSDL2_HEADERS} ${GameEngineDemoSDL2_SOURCES})
+
+target_link_libraries(game_engine
+PRIVATE
+    SDL2::SDL2
+    #SDL2_ttf
+)
+
+if (WIN32)
+    target_link_libraries(
+        game_engine PRIVATE SDL2::SDL2main
+    )
+
+    add_custom_command(TARGET game_engine POST_BUILD    # Adds a post-build event to MyTest
+        COMMAND ${CMAKE_COMMAND} -E copy            # which executes "cmake - E copy_if_different..."
+        ${SDL2_LIB_DLLS}                            # <--this is in-file
+        $<TARGET_FILE_DIR:game_engine>)                  # <--this is out-file path
+endif()
+
+

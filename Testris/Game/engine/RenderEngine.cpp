@@ -157,6 +157,7 @@ void RenderEngine::draw(GameBoard& board, int sx, int sy)
 	}
 }
 
+/*
 void RenderEngine::draw(TTF_Font& gameFont, std::string t, int sx, int sy)
 {
 	SDL_Surface* text;
@@ -177,6 +178,7 @@ void RenderEngine::draw(TTF_Font& gameFont, std::string t, int sx, int sy)
 
 	SDL_RenderCopy(gameRenderer, text_texture, NULL, &dest);
 }
+*/
 
 void RenderEngine::drawBoardFrame(GameBoard& board)
 {

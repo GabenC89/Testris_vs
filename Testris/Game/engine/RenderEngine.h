@@ -12,7 +12,8 @@
 
 //SDL Includes
 #include <SDL.h>
-#include <SDL_ttf.h>
+//#include <SDL_ttf.h>
+
 
 template<typename T>
 void draw(T& t, int sx, int sy) {}
@@ -21,7 +22,7 @@ template void draw<GameBoard>(GameBoard& board, int sx, int sy);
 template void draw<Block>(Block& b, int sx, int sy);
 template<typename T, typename U>
 void draw(T& t, U u, int sx, int sy) {}
-template void draw<TTF_Font, std::string>(TTF_Font& gameFont, std::string text, int sx, int sy);
+//template void draw<TTF_Font, std::string>(TTF_Font& gameFont, std::string text, int sx, int sy);
 
 class RenderEngine 
 {
@@ -53,7 +54,7 @@ public:
 	void drawFrameForNextBlock(int sx, int sy, int w, int h);
 	void draw(GameBoard& board, int sx, int sy);
 	void draw(Block& b, int sx, int sy);
-	void draw(TTF_Font& gameFont, std::string text, int sx, int sy);
+	//void draw(TTF_Font& gameFont, std::string text, int sx, int sy);
 	void drawGhost(Block& b, int sx, int sy);
 	void drawBoardFrame(GameBoard& board);
 
