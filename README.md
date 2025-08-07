@@ -38,5 +38,17 @@ ChangeLog:
   	  	** mkdir build, cd build and go again with the cmake .. -G "MinGW Makefiles", then make install -j8
   	  	** Do this with libpng as well and repeat the same steps.
   	  	** After this you can go and to the same build for SDL_Image itself, so you set up a simple libPNG usage for SDL_Image
+  - 2025.08.07.
+    	* Managed to create a VSCode project that can manage and build both SDL3 and the project, with the above self notes learned
+    	* SDL2 has been changed to the latest SDL3 library available, also SDL_image is included on demand for the project
+    	* SDL3 required several code reconsiderations and refactor due to removed / changed functionalities and Enumerated flags
+    	* Several behaviorial changes fixed on the fly when fixing the changes according to SDL2 -> SDL3 switch.
+    	* SDL3 DLLs have to be still copied manually next to the built exe (This should be automated in the near future on project side)
+    	* SDL libraries no longer included into the project as they are managed and installed from an "external folder" as above "Self notes" suggested.
+    	* original project folder structure changed to a more common one:
+    		** include (Headers #still structured in further subfolders though)
+    		** src (All the source CPP files - with the same subfolder structure)
+    	* TODO: SDL3_TTF problems not fixed yet, also font handling may require some refactoring as well, based on what learned so far
+    	* Still: My "Tetris - Game Engine demo" is finally playable once again! both in Full Screen mode and windowed mode! Yay! ;)
   	  	
   	  
